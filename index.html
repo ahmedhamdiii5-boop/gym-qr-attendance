@@ -68,7 +68,16 @@
 
   const url = '[https://script.google.com/macros/s/AKfycbyGLlK9pm_kpNE3dOA6rV1Rgj1TsjNntgSzRzf6nWmDkxVAgDhpunb-dhMoyFgIATLp/exec](https://script.google.com/macros/s/AKfycbyGLlK9pm_kpNE3dOA6rV1Rgj1TsjNntgSzRzf6nWmDkxVAgDhpunb-dhMoyFgIATLp/exec)?id=' + encodeURIComponent(id);
 
-  window.location.href = url;
+  fetch(url)
+  .then(response => response.text())
+  .then(message => {
+    result.textContent = message;
+    lastId = '';
+  })
+  .catch(error => {
+    result.textContent = 'حصل خطأ أثناء التسجيل';
+    lastId = '';
+  });
 }
 
     document.getElementById('test').onclick = function () {
