@@ -80,9 +80,12 @@
       if (scanner) return;
 
       scanner = new Html5QrcodeScanner('reader', {
-        fps: 10,
-        qrbox: { width: 220, height: 220 }
-      }, false);
+  fps: 10,
+  qrbox: { width: 220, height: 220 },
+  videoConstraints: {
+    facingMode: { ideal: "environment" }
+  }
+}, false);
 
       scanner.render(function (text) {
         if (text !== lastId) showId(text);
