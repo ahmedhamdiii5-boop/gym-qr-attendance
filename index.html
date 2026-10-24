@@ -58,27 +58,16 @@
     const result = document.getElementById('result');
     const memberInput = document.getElementById('memberId');
 
-   async function showId(value) {
+ 
+function showId(value) {
   const id = String(value || '').trim();
   if (!id || id === lastId) return;
 
   lastId = id;
   memberInput.value = id;
-  result.textContent = 'جاري تسجيل الحضور...';
+  result.textContent = 'تمت قراءة الكود. رقم المشترك: ' + id;
+}
 
-  const url = '[https://script.google.com/macros/s/AKfycbyGLlK9pm_kpNE3dOA6rV1Rgj1TsjNntgSzRzf6nWmDkxVAgDhpunb-dhMoyFgIATLp/exec](https://script.google.com/macros/s/AKfycbyGLlK9pm_kpNE3dOA6rV1Rgj1TsjNntgSzRzf6nWmDkxVAgDhpunb-dhMoyFgIATLp/exec)?id=' + encodeURIComponent(id);
-
- 
-const frame = document.createElement('iframe');
-frame.style.display = 'none';
-frame.src = url;
-document.body.appendChild(frame);
-
-result.textContent = 'تم إرسال طلب تسجيل الحضور للمشترك ' + id;
-
-setTimeout(() => {
-  frame.remove();
-}, 10000);
 
 
     document.getElementById('test').onclick = function () {
