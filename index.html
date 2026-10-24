@@ -1,0 +1,93 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gym QR Scanner</title>
+  <script src="https://unpkg.com/html5-qrcode"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #101827;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    main {
+      max-width: 440px;
+      margin: 25px auto;
+      background: #1e293b;
+      border-radius: 18px;
+      padding: 22px;
+    }
+    button, input {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 14px;
+      margin-top: 12px;
+      border: 0;
+      border-radius: 9px;
+      font-size: 16px;
+    }
+    button {
+      background: #16a34a;
+      color: white;
+      cursor: pointer;
+    }
+    input { background: white; color: #111; }
+    #reader { margin-top: 18px; background: white; color: #111; }
+    #result { margin-top: 18px; overflow-wrap: anywhere; }
+  </style>
+</head>
+<body>
+  <main>
+    <h2>Gym QR Attendance</h2>
+    <p>امسح كود المشترك بالكاميرا</p>
+    <button id="start">تشغيل الكاميرا</button>
+    <div id="reader"></div>
+    <p id="result">جاهز للتجربة</p>
+    <input id="memberId" placeholder="Member ID">
+    <button id="test">عرض رقم المشترك</button>
+  </main>
+
+  <script>
+    let scanner;
+    let lastId = '';
+
+    const result = document.getElementById('result');
+    const memberInput = document.getElementById('memberId');
+
+    function showId(value) {
+      const id = String(value || '').trim();
+      if (!id) return;
+
+      lastId = id;
+      memberInput.value = id;
+      result.textContent = 'تمت قراءة الكود. رقم المشترك: ' + id;
+    }
+
+    document.getElementById('test').onclick = function () {
+      showId(memberInput.value);
+    };
+
+    document.getElementById('start').onclick = function () {
+      if (typeof Html5QrcodeScanner === 'undefined') {
+        result.textContent = 'تعذر تحميل قارئ QR. تحقق من الإنترنت.';
+        return;
+      }
+
+      if (scanner) return;
+
+      scanner = new Html5QrcodeScanner('reader', {
+        fps: 10,
+        qrbox: { width: 220, height: 220 }
+      }, false);
+
+      scanner.render(function (text) {
+        if (text !== lastId) showId(text);
+      }, function () {});
+    };
+  </script>
+</body>
+</html>
