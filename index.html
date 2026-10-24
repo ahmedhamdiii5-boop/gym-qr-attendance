@@ -58,14 +58,18 @@
     const result = document.getElementById('result');
     const memberInput = document.getElementById('memberId');
 
-    function showId(value) {
-      const id = String(value || '').trim();
-      if (!id) return;
+   async function showId(value) {
+  const id = String(value || '').trim();
+  if (!id || id === lastId) return;
 
-      lastId = id;
-      memberInput.value = id;
-      result.textContent = 'تمت قراءة الكود. رقم المشترك: ' + id;
-    }
+  lastId = id;
+  memberInput.value = id;
+  result.textContent = 'جاري تسجيل الحضور...';
+
+  const url = '[https://script.google.com/macros/s/AKfycbyGLlK9pm_kpNE3dOA6rV1Rgj1TsjNntgSzRzf6nWmDkxVAgDhpunb-dhMoyFgIATLp/exec](https://script.google.com/macros/s/AKfycbyGLlK9pm_kpNE3dOA6rV1Rgj1TsjNntgSzRzf6nWmDkxVAgDhpunb-dhMoyFgIATLp/exec)?id=' + encodeURIComponent(id);
+
+  window.location.href = url;
+}
 
     document.getElementById('test').onclick = function () {
       showId(memberInput.value);
